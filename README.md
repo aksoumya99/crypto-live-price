@@ -12,6 +12,6 @@ docker-compose up --build
 
 Data can be fetched using Postman currently.
 
-Mongo DB is indexed for faster querying.
+The database is indexed for faster querying.
 
 The Frontend code will be added incrementally in the upcoming days.
