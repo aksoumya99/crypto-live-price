@@ -1,21 +1,6 @@
 import axios from 'axios';
 import Coin from '../models/coinModel';
 
-// interface CoinDataProps {
-//     name: String,
-//     symbol: String,
-//     rank: Number,
-//     imageUrl: String,
-//     allTimeHighUSD: Number,
-//     circulatingSupply: Number,
-//     totalSupply: Number,
-//     maxSupply: Number,
-//     rate: Number,
-//     volume: Number,
-//     cap: Number,
-//     liquidity: Number
-// }
-
 const fetchCoinDataUtil = async () => {
     const coinCodes = ['BTC', 'ETH', 'USDT', 'BNB', 'SOL'];
     const apiUrl = 'https://api.livecoinwatch.com/coins/single';
@@ -51,6 +36,7 @@ const fetchCoinDataUtil = async () => {
             } = response.data;
 
             const coinData = {
+                code: coinCode,
                 name,
                 rank,
                 allTimeHighUSD,
@@ -62,6 +48,7 @@ const fetchCoinDataUtil = async () => {
                 cap,
                 liquidity
             };
+
             return coinData;
         }).catch(err => {
             console.log(`Error fetching data for ${coinCode}:`, err);
@@ -72,8 +59,8 @@ const fetchCoinDataUtil = async () => {
     const coinsData = await Promise.all(promises);
     
     coinsData.forEach(async (coinData) => {
-        const coinCollection = new Coin(coinData);
-        await coinCollection.save();
+        const coinDocument = new Coin(coinData);
+        await coinDocument.save();
     });
 }
 
