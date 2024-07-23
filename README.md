@@ -6,18 +6,19 @@ Step 1: Clone the repository
 Step 2: Run the following commands
 
 ```
-cd crypto-live-price/backend
+cd crypto-live-price
 docker-compose up --build
 ```
 
-Data can be fetched using Postman currently.
-
-Example cURL-
+Then after the docker container runs, go to the following url
 ```
-curl --location 'localhost:3000/api/data/BTC'
+http://localhost:3000/
 ```
 
-The database is indexed for faster querying.
+Both Frontend and Backend code has been added.
 
-The Frontend code will be added incrementally in the upcoming days.
+On the Frontend, The design is customised according to FomoFactory Design.
+
+On the Backend, The database is indexed for faster querying.
+
 
