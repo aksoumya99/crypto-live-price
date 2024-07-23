@@ -1,16 +1,10 @@
-import { useDispatch, useSelector } from "react-redux"
-import { fetchPrice, getCoinPrice, getFetchStatus } from "./coinPriceSlice";
-import { CoinPriceRow } from "./coinPriceRow";
+import { useSelector } from "react-redux";
+import { CoinPriceRow } from "../components/coinPriceRow";
+import { getCoinPricesData } from "../redux/slices/coinPriceSlice";
 
 export const CoinPriceTable = () => {
-    const dispatch = useDispatch();
-    const btcPrice = useSelector(getCoinPrice);
-
-    setInterval(() => {
-        console.log("refetch");
-        dispatch(fetchPrice())
-    }, 5000);
-
+    const coinPricesData = useSelector(getCoinPricesData);
+    
     return (
         <div className="flex items-center justify-center w-10/12 m-8">
             <div className="w-full relative overflow-x-auto rounded-lg shadow-2xl">
@@ -38,9 +32,11 @@ export const CoinPriceTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <CoinPriceRow/>
-                        <CoinPriceRow/>
-                        <CoinPriceRow/>
+                        {
+                            coinPricesData.map((coinPriceData, index) => {
+                                return <CoinPriceRow index={index} coinPriceData={coinPriceData}/>
+                            })
+                        }
                     </tbody>
                 </table>
             </div>

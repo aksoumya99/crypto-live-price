@@ -4,7 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import { Provider } from 'react-redux';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import store from './app/store.ts';
+import store from './redux/store.ts';
 
 const router = createBrowserRouter([
   {

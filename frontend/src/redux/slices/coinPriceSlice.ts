@@ -2,14 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-    coinPrice: 0,
+    coinPricesData: [],
     status: 'idle',
     error: null
 }
 
-export const fetchPrice = createAsyncThunk('coinPrice/fetchPrice', async (_, thunkAPI) => {
+export const fetchPrice = createAsyncThunk('coinPrice/fetchPrice', async (coinCode, thunkAPI) => {
     try {
-        const response = await axios.get('http://localhost:3000/api/data/BTC');
+        const response = await axios.get(`http://localhost:3000/api/data/${coinCode}`);
         return response.data;
     }
     catch(error) {
@@ -31,7 +31,7 @@ const coinPriceSlice = createSlice({
         .addCase(fetchPrice.fulfilled, (state, action) => {
             state.status = 'succeeded';
             console.log('succeeded');
-            state.coinPrice = action.payload[0].rate;
+            state.coinPricesData = action.payload;
         })
         .addCase(fetchPrice.rejected, (state, action) => {
             state.status = 'failed';
@@ -41,8 +41,11 @@ const coinPriceSlice = createSlice({
     }
 });
 
-export const getCoinPrice = (state) => {
-    return state.coinPriceSlice.coinPrice;
+export const getCoinPricesData = (state) => {
+    if(!state.coinPriceSlice.coinPricesData) {
+        return [];
+    }
+    return state.coinPriceSlice.coinPricesData;
 }
 
 export const getFetchStatus = (state) => {
