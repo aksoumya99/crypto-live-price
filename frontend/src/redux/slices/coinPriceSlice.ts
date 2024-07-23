@@ -7,9 +7,11 @@ const initialState = {
     error: null
 }
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5001';
+
 export const fetchPrice = createAsyncThunk('coinPrice/fetchPrice', async (coinCode, thunkAPI) => {
     try {
-        const response = await axios.get(`http://localhost:3000/api/data/${coinCode}`);
+        const response = await axios.get(`${backendUrl}/api/data/${coinCode}`);
         return response.data;
     }
     catch(error) {
